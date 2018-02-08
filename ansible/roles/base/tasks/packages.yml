@@ -1,0 +1,16 @@
+# Install and configure default packages and services
+- name: 'Update package database'
+  package:
+    update_cache: "yes"
+
+- name: 'Install base packages'
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - cronie
+    - rsyslog
+    - logrotate
+    - vim
+    - sudo
+

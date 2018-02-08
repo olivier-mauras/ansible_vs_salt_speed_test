@@ -1,0 +1,11 @@
+# Set up sudoers rights
+- name: 'Set custom sudoers.d config'
+  copy:
+    src: "{{ item }}"
+    dest: /etc/sudoers.d
+    owner: root
+    group: root
+    mode: 0440
+  with_fileglob:
+    - sudoers.d/*
+

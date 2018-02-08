@@ -1,0 +1,20 @@
+# Default services
+- name: 'Remove unneeded ttys'
+  file:
+    path: /etc/runit/runsvdir/default/agetty-tty{{ item }}
+    state: absent
+  with_items:
+    - 3
+    - 4
+    - 5
+    - 6
+
+- name: 'Add default services'
+  file:
+    src: /etc/sv/{{ item }}
+    dest: /etc/runit/runsvdir/default/{{ item }}
+    state: link
+  with_items:
+    - cronie
+    - rsyslogd
+
