@@ -1,16 +1,16 @@
 Table of Contents
 =================
 
-      * [Ansible VS Salt - Speed test](#ansible-vs-salt---speed-test)
-      * [Apply states](#apply-states)
-         * [Ansible](#ansible)
-         * [Salt](#salt)
-      * [Verify states](#verify-states)
-         * [Ansible](#ansible-1)
-         * [Salt](#salt-1)
-      * [Without package management](#without-package-management)
-         * [Ansible](#ansible-2)
-         * [Salt](#salt-2)
+* [Ansible VS Salt - Speed test](#ansible-vs-salt---speed-test)
+* [Apply states](#apply-states)
+  * [Ansible](#ansible)
+  * [Salt](#salt)
+* [Verify states](#verify-states)
+  * [Ansible](#ansible-1)
+  * [Salt](#salt-1)
+* [Without package management](#without-package-management)
+  * [Ansible](#ansible-2)
+  * [Salt](#salt-2)
 
 
 Ansible VS Salt - Speed test
