@@ -1,5 +1,7 @@
-Table of Contents
-=================
+Ansible VS Salt - Speed test
+----------------------------
+
+#### Table of Contents
 
 * [Ansible VS Salt - Speed test](#ansible-vs-salt---speed-test)
 * [Apply states](#apply-states)
@@ -12,9 +14,6 @@ Table of Contents
   * [Ansible](#ansible-2)
   * [Salt](#salt-2)
 
-
-Ansible VS Salt - Speed test
-----------------------------
 
 ## Apply states
 
