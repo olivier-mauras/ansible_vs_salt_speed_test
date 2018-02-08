@@ -1,4 +1,7 @@
-# Apply
+Ansible VS Salt - Speed test
+----------------------------
+
+## Apply states
 
 ### Ansible
 ``` text
@@ -316,4 +319,162 @@ Total run time:    1.933 s
 real	0m4.132s
 user	0m3.165s
 sys	0m0.603s
+```
+
+## Verify states
+
+### Ansible
+``` text
+# time ansible-playbook -i localhost desktop.yml 
+ [WARNING]: Found both group and host with same name: localhost
+
+
+PLAY [localhost] *******************************************************************************
+
+TASK [Gathering Facts] *************************************************************************
+ok: [localhost]
+
+TASK [base : Update package database] **********************************************************
+ok: [localhost]
+
+TASK [base : Install base packages] ************************************************************
+ok: [localhost] => (item=cronie)
+ok: [localhost] => (item=rsyslog)
+ok: [localhost] => (item=logrotate)
+ok: [localhost] => (item=vim)
+ok: [localhost] => (item=sudo)
+
+TASK [base : Remove unneeded ttys] *************************************************************
+ok: [localhost] => (item=3)
+ok: [localhost] => (item=4)
+ok: [localhost] => (item=5)
+ok: [localhost] => (item=6)
+
+TASK [base : Add default services] *************************************************************
+ok: [localhost] => (item=cronie)
+ok: [localhost] => (item=rsyslogd)
+
+TASK [base : Deploy logrotate.conf] ************************************************************
+ok: [localhost]
+
+TASK [base : Deploy logrotate.d] ***************************************************************
+ok: [localhost] => (item=/root/roles/base/files/logrotate.d/syslog)
+
+TASK [base : Set custom sudoers.d config] ******************************************************
+ok: [localhost] => (item=/root/roles/base/files/sudoers.d/users)
+
+PLAY RECAP *************************************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=0   
+
+
+real	0m10.386s
+user	0m7.673s
+sys	0m1.651s
+```
+
+### Salt
+``` text
+# time salt-call --local state.apply
+local:
+----------
+          ID: base.packages
+    Function: pkg.installed
+      Result: True
+     Comment: All specified packages are already installed
+     Started: 21:03:14.178165
+    Duration: 46.22 ms
+     Changes:
+----------
+          ID: base.services.removed.tty3
+    Function: file.absent
+        Name: /etc/runit/runsvdir/default/agetty-tty3
+      Result: True
+     Comment: File /etc/runit/runsvdir/default/agetty-tty3 is not present
+     Started: 21:03:14.229440
+    Duration: 0.839 ms
+     Changes:
+----------
+          ID: base.services.removed.tty4
+    Function: file.absent
+        Name: /etc/runit/runsvdir/default/agetty-tty4
+      Result: True
+     Comment: File /etc/runit/runsvdir/default/agetty-tty4 is not present
+     Started: 21:03:14.230454
+    Duration: 0.488 ms
+     Changes:
+----------
+          ID: base.services.removed.tty5
+    Function: file.absent
+        Name: /etc/runit/runsvdir/default/agetty-tty5
+      Result: True
+     Comment: File /etc/runit/runsvdir/default/agetty-tty5 is not present
+     Started: 21:03:14.231111
+    Duration: 0.46 ms
+     Changes:
+----------
+          ID: base.services.removed.tty6
+    Function: file.absent
+        Name: /etc/runit/runsvdir/default/agetty-tty6
+      Result: True
+     Comment: File /etc/runit/runsvdir/default/agetty-tty6 is not present
+     Started: 21:03:14.231714
+    Duration: 0.487 ms
+     Changes:
+----------
+          ID: base.services.enabled.cronie
+    Function: file.symlink
+        Name: /etc/runit/runsvdir/default/cronie
+      Result: True
+     Comment: Symlink /etc/runit/runsvdir/default/cronie is present and owned by root:root
+     Started: 21:03:14.232346
+    Duration: 2.344 ms
+     Changes:
+----------
+          ID: base.services.enabled.rsyslogd
+    Function: file.symlink
+        Name: /etc/runit/runsvdir/default/rsyslogd
+      Result: True
+     Comment: Symlink /etc/runit/runsvdir/default/rsyslogd is present and owned by root:root
+     Started: 21:03:14.234850
+    Duration: 2.083 ms
+     Changes:
+----------
+          ID: base.logrotate.logrotate.conf
+    Function: file.managed
+        Name: /etc/logrotate.conf
+      Result: True
+     Comment: File /etc/logrotate.conf is in the correct state
+     Started: 21:03:14.237111
+    Duration: 23.092 ms
+     Changes:
+----------
+          ID: base.logrotate.logrotate.d
+    Function: file.recurse
+        Name: /etc/logrotate.d
+      Result: True
+     Comment: The directory /etc/logrotate.d is in the correct state
+     Started: 21:03:14.260377
+    Duration: 6.836 ms
+     Changes:
+----------
+          ID: base.sudo.sudoers.d
+    Function: file.recurse
+        Name: /etc/sudoers.d
+      Result: True
+     Comment: The directory /etc/sudoers.d is in the correct state
+     Started: 21:03:14.267380
+    Duration: 6.544 ms
+     Changes:
+
+Summary for local
+-------------
+Succeeded: 10
+Failed:     0
+-------------
+Total states run:     10
+Total run time:   89.393 ms
+
+real	0m2.509s
+user	0m2.050s
+sys	0m0.401s
 ```
