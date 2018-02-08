@@ -3,14 +3,13 @@ Ansible VS Salt - Speed test
 
 #### Table of Contents
 
-* [Ansible VS Salt - Speed test](#ansible-vs-salt---speed-test)
 * [Apply states](#apply-states)
   * [Ansible](#ansible)
   * [Salt](#salt)
 * [Verify states](#verify-states)
   * [Ansible](#ansible-1)
   * [Salt](#salt-1)
-* [Without package management](#without-package-management)
+* [Verify without package management](#verify-without-package-management)
   * [Ansible](#ansible-2)
   * [Salt](#salt-2)
 
@@ -493,7 +492,7 @@ user	0m2.050s
 sys	0m0.401s
 ```
 
-## Without package management
+## Verify without package management
 
 ### Ansible
 ``` text
