@@ -1,5 +1,6 @@
 Ansible VS Salt - Speed test
 ----------------------------
+See `outputs.md` for complete outputs of commands.  
 
 #### Table of Contents
 
